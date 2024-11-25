@@ -94,7 +94,6 @@
             at Structure Health & Fitness. Technical <br> expertise and experience matter, but so does a positive,
             empathetic and aspirational attitude.</p>
         <div class="text-center pt-4 flex gap-4 justify-center">
-            <button class="font-semibold shadow-lg" onclick="openModal('modelConfirm')">Become Trainer</button>
             <div>
                 @if (session('success'))
                     <div class="text-green-500">
