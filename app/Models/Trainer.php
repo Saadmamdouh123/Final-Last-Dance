@@ -12,7 +12,8 @@ class Trainer extends Model
         'lastName',
         'email',
         'phone',
-        'user_id'
+        'user_id',
+        "payment"
     ];
 
     public function user()

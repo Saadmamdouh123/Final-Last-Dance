@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\CalorieCalculatorController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CoachRequestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainerController;
 use Illuminate\Support\Facades\Route;
@@ -32,13 +33,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/admin/destroy/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
     Route::get('/sessions/create', [GymSessionController::class, 'create'])->name('sessions.create');
-    Route::post('/sessions', [GymSessionController::class, 'store'])->name('sessions.store');
+    Route::post('/sessions/store', [GymSessionController::class, 'store'])->name('sessions.store');
     Route::get('/showSession', [ShowSessionController::class, 'index'])->name('showSession.store');
     Route::get('/calendar/create', [CalenderController::class, 'create'])->name('calender.create');
     Route::post('/calendar/store', [CalenderController::class, 'store'])->name('calendar.store');
     Route::get('/calendar', [CalenderController::class, 'index'])->name('calendar');
+    Route::get('/session/createe', [GymSessionController::class, 'createe'])->name('session.createe');
+    
 
 
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/coach-request', [CoachRequestController::class, 'store'])->name('coach.request');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/coach-requests', [AdminController::class, 'index'])->name('admin.requests');
+    Route::put('/admin/coach-requests/{id}/reject', [AdminController::class, 'rejectRequest'])->name('admin.reject_request');
+});
+Route::put('/admin/update/{user}', [AdminController::class, 'update'])->name('admin.approve_request');
 
 require __DIR__.'/auth.php';

@@ -42,13 +42,11 @@ class CheckoutController extends Controller
         
         // $user = Auth::user();
 
-
         $trainerRequest = Trainer::where('user_id', Auth::user()->id)->first();
-
-            // $trainerRequest->update(['payment' => true]);
-            
-            return redirect()->route('sessions.create')->with('success', 'Payment successful, your trainer request is now active.');
         
+        // $trainerRequest->update(['payment' => true]);
+                            
+            return redirect()->route('sessions.create')->with('success', 'Payment successful, your trainer request is now active.');
         
     }
     

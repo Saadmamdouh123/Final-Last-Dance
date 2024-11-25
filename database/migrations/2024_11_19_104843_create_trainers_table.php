@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trainers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('payment')->nullable()->default(false);
+            $table->boolean('payment')->default(false);
             $table->string('lastName');
             $table->string('email');
             $table->string('phone');

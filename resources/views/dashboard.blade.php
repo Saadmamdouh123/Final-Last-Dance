@@ -15,7 +15,8 @@
         <ul class="flex gap-8 justify-center items-center">
             <li><a href="#liv2" class="text-black hover:border-b-2 border-yellow-500">Services</a></li>
             <li><a href="#liv1" class="text-black hover:border-b-2 border-yellow-500">Our Trainer</a></li>
-            <li><a href="{{ route("showSession.store") }}" class="text-black hover:border-b-2 border-yellow-500">Show Session</a></li>
+            <li><a href="{{ route('showSession.store') }}" class="text-black hover:border-b-2 border-yellow-500">Show
+                    Session</a></li>
             @if (Auth::user()->role == 'admin')
                 <li><a href="{{ route('admin.index') }}" class="text-black hover:border-b-2 border-yellow-500">Admin
                         Dashboard</a></li>
@@ -94,7 +95,34 @@
             empathetic and aspirational attitude.</p>
         <div class="text-center pt-4 flex gap-4 justify-center">
             <button class="font-semibold shadow-lg" onclick="openModal('modelConfirm')">Become Trainer</button>
-            <button class="px-5 font-semibold shadow-lg">Book Session</button>
+            <div>
+                @if (session('success'))
+                    <div class="text-green-500">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="text-red-500">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (Auth::user()->hasRole('coach'))
+                      <button><a href="{{ route("sessions.create") }}">create session</a></button>
+                    @elseif (!Auth::user()->hasRole('coach'))
+                    <form method="POST" action="{{ route('coach.request') }}">
+                        @csrf
+                        <button type="submit" class="px-4 py-2 bg-yellow-400 text-black rounded-lg hover:bg-blue-700">
+                            Become a Coach
+                        </button>
+                    </form>
+                @endif
+
+                
+            </div>
+            <button class="px-5 font-semibold shadow-lg">
+                <a href="/calendar">Book Session</a>
+            </button>
         </div>
         <div class="flex gap-4 justify-around p-12">
             <img class="opacity-90 rounded-xl shadow-gray-800 shadow-2xl" width="350px"
@@ -172,14 +200,19 @@
 
     <div class="p-12 bg-slate-100">
         <div class="flex justify-center items-center pb-6">
-            <img width="100px" class="right-6 bottom-[390px] text-center bg-yellow-400 rounded-lg" src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394" alt="">
+            <img width="100px" class="right-6 bottom-[390px] text-center bg-yellow-400 rounded-lg"
+                src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394"
+                alt="">
         </div>
         <h1 class="text-4xl text-center font-black pb-3">Flexible Plans for Every <br> Budgets</h1>
-        <p class="text-center text-lg text-gray-500">Choose a plan that suite with you.No long-term commitments required.</p>
+        <p class="text-center text-lg text-gray-500">Choose a plan that suite with you.No long-term commitments
+            required.</p>
         <div class="flex justify-center items-center gap-5 p-10">
             <div class="bg-white shadow-2xl p-10 rounded-xl relative">
                 <h1 class="pb-6 font-black">Gym Subscription</h1>
-                <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg" src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394" alt="">
+                <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg"
+                    src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394"
+                    alt="">
                 <div>
                     <p class="text-4xl font-extrabold pb-3">$100</p>
                     <p>Per user/month,billed annually</p>
@@ -220,8 +253,10 @@
             </div>
             <div class="flex justify-center items-center gap-5 b">
                 <div class="bg-black shadow-2xl p-10 rounded-xl relative">
-                    <h1 class="pb-6 text-white">Gym Subscription</h1>
-                    <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg h-17" src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394" alt="">
+                    <h1 class="pb-6 text-yellow-400 font-black">Gym Subscription</h1>
+                    <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg h-17"
+                        src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394"
+                        alt="">
                     <div>
                         <p class="text-5xl font-extrabold pb-3 text-white">$300</p>
                         <p class="text-white">Per user/month,billed annually</p>
@@ -252,16 +287,18 @@
                             <h1 class="text-white">Customized Home/Gym Workout plans</h1>
                         </div>
                         <button aria-label="Start Game"
-                        class="px-8 py-2 text-white font-bold text-lg rounded-full shadow-lg transition-transform transform bg-transparent border-2 border-yellow-500 hover:scale-105 hover:border-yellow-400 hover:shadow-yellow-400/50 hover:shadow-2xl focus:outline-none"
-                        id="startButton">
-                        <a href="/checkout">Checkout</a>
-                    </button>
+                            class="px-8 py-2 text-white font-bold text-lg rounded-full shadow-lg transition-transform transform bg-transparent border-2 border-yellow-500 hover:scale-105 hover:border-yellow-400 hover:shadow-yellow-400/50 hover:shadow-2xl focus:outline-none"
+                            id="startButton">
+                            <a href="/checkout">Checkout</a>
+                        </button>
                     </div>
                 </div>
                 <div class="flex justify-center items-center gap-10">
                     <div class="bg-white shadow-2xl p-10 rounded-xl relative">
-                        <h1 class="pb-6">Gym Subscription</h1>
-                        <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg" src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394" alt="">
+                        <h1 class="pb-6 font-extrabold">Gym Subscription</h1>
+                        <img width="50px" class="absolute right-6 bottom-[390px] bg-yellow-400 rounded-lg"
+                            src="https://images-platform.99static.com/MZXWaRAM0hdFsoiV5rl9WUctJq0=/500x500/top/smart/99designs-contests-attachments/57/57274/attachment_57274394"
+                            alt="">
                         <div>
                             <p class="text-4xl pb-3 font-extrabold">$200</p>
                             <p>Per user/month,billed annually</p>
@@ -292,16 +329,19 @@
                                 <h1>Customized Home/Gym Workout plans</h1>
                             </div>
                             <button aria-label="Start Game"
-                            class="px-8 py-2 text-black font-bold text-lg rounded-full shadow-lg transition-transform transform bg-transparent border-2 border-yellow-500 hover:scale-105 hover:border-yellow-400 hover:shadow-yellow-400/50 hover:shadow-2xl focus:outline-none"
-                            id="startButton">
-                            <a href="/checkout" class="text-black">Checkout</a>
-                        </button>
+                                class="px-8 py-2 text-black font-bold text-lg rounded-full shadow-lg transition-transform transform bg-transparent border-2 border-yellow-500 hover:scale-105 hover:border-yellow-400 hover:shadow-yellow-400/50 hover:shadow-2xl focus:outline-none"
+                                id="startButton">
+                                <a href="/checkout" class="text-black">Checkout</a>
+                            </button>
                         </div>
                     </div>
 
 
                 </div>
             </div>
+
+
+            
 
 
 
